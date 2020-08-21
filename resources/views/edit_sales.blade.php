@@ -4,33 +4,13 @@
     <h1>Adicionar / Editar Venda</h1>
     <div class='card'>
         <div class='card-body'>
-            <form action="/atualiza" method="POST" name="formEditSale">
+            <form action="/venda/atualiza/{{$sales->id}}" method="POST" name="formEditSale">
             @CSRF
             @method('PUT')
-            
-             <input type="text" hidden value="{{ $sales->id }}">
-
-                @if(session("created"))
-                <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-                    <strong>{{session("created")}}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-
-            @if(session("error"))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>{{session("error")}}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
                 <h5>Informações do cliente</h5>
                 <div class="form-group">
                     <label for="name">Nome do cliente</label>
-                    <input value="{{$sales->nameCustomer}}" disabled="" name="name" type="text" class="form-control " id="name" style="color:#bdbdbd;" >
+                    <input value="{{$sales->nameCustomer}}" readonly="readonly" name="name" type="text" class="form-control " id="name" style="color:#bdbdbd;" >
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -38,7 +18,7 @@
                 </div>
                 <div class="form-group">
                     <label for="cpf">CPF</label>
-                    <input value="{{$sales->cpfCustomer}}" disabled="" name="cpf" type="text" class="form-control" id="cpf" placeholder="99999999999" style="color:#bdbdbd;" >
+                    <input value="{{$sales->cpfCustomer}}" readonly="readonly" name="cpf" type="text" class="form-control" id="cpf" placeholder="99999999999" style="color:#bdbdbd;" >
                 </div>
                 <h5 class='mt-5'>Informações da venda</h5>
                 <div class="form-group">
@@ -54,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     <label for="date">Data</label>
-                    <input value="{{$sales->date_sale}}" name="date" type="text" class="form-control" id="date" >
+                    <input value="{{$sales->date_sale}}" readonly="readonly" name="date" type="text" class="form-control" id="date" style="color:#bdbdbd;" >
                 </div>
                 <div class="form-group">
                     <label for="quantity">Quantidade</label>

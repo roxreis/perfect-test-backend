@@ -3,6 +3,24 @@
 @section('content')
     <h1>Dashboard de vendas</h1>
     <div class='card mt-3'>
+
+        @if(session("created"))
+            <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                <strong>{{session("created")}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if(session("error"))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{session("error")}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class='card-body'>
             <h5 class="card-title mb-5">Tabela de vendas
                 <a href='/venda/nova' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>Nova venda</a></h5>

@@ -137,7 +137,7 @@ class SaleController extends Controller
      * @param  \App\Sale  $sale
      * @return \Illuminate\Http\Response
      */
-    public function updateSale(Request $request, $id)
+    public function updateSale(Request $request, $id=0)
     {
         $sales = Sale::find($id);
 
@@ -157,24 +157,37 @@ class SaleController extends Controller
         $formatDate = $request->input('date');
         $formatDate = date('Y-m-d H:i:s');
 
+        function calculateDeduction() {
+
+            $product = new Product();
+            $sales = new Sale();
+            $value = $product->priceProduct - $sales->deductionSale;
+
+            return $value;
+        }
+        
+        $finalPrice = calculateDeduction();
+
         $sales->nameCustomer = $request->input('name');
         $sales->emailCustomer = $request->input('email');
         $sales->cpfCustomer = $request->input('cpf');
+        $sales->name_product_sold = $request->input('product');
         $sales->date_sale = $formatDate;
         $sales->quantSale = $request->input('quantity');
         $sales->deductionSale = $finalValue;
         $sales->statusSale = $request->input('status');
-        $sales->name_product_sold = $request->input('product');
-        // $sales['user_id'] = Auth::user()->id;
-        // $sales['user_name'] = Auth::user()->name;
+        $sales->priceSale = $finalPrice;
+        
+        // $product = Product::where('nameProduct', $request->input('product'))->first();
+        // $sales->product_id = $product->id;
         $result = $sales->save();
 
         if($result) {
             
             // Passando um parâmetro via session no redirect na view verifico a session para exibir a mensagem de sucesso)
-            return redirect("/dashboardr")->with('created',"Venda atualizada com sucesso!");
+            return redirect("/dashboard")->with('created',"Venda atualizada com sucesso!");
            }else{
-            return redirect("/dashboardr")->with('error',"Ops! Falha ao atualizar as informações");
+            return redirect("/dashboard")->with('error',"Ops! Falha ao atualizar as informações");
         }
     }
 
