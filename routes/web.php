@@ -26,7 +26,9 @@ Route::group(['prefix'=>'produto'], function(){
     Route::post('/cadastrar', 'ProductController@storeProduct');
     Route::get('/cadastrar', 'ProductController@storeProduct');
     Route::get('/novo', 'ProductController@createNewProduct'); 
-    Route::put('/atualizar', 'ProductController@updateProduct'); 
+    Route::put('/atualizar/{id?}', 'ProductController@updateProduct');
+    Route::get('/editar/{id?}', 'ProductController@editProduct'); 
+
     
 });
 

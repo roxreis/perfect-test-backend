@@ -86,9 +86,10 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function editProduct(Product $product, $id=0)
     {
-        //
+        $products = Product::find($id);
+            return view('edit_products', compact('products',));
     }
 
     /**
@@ -98,9 +99,33 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function updateProduct(Request $request, Product $product)
+    public function updateProduct(Request $request, $id=0)
     {
-        //
+        $product = Product::find($id);
+        //armazanendo valor do input price em variável para usar na função abaixo
+        $get_value = $request->input('price');
+
+        function replacePoint($get_value) {
+            //função para alterar a virgula nos valores que vem do formulario para ponto
+            $source = array('.', ',');
+            $replace = array('', '.');
+            $value = str_replace($source, $replace, $get_value); //remove os pontos e substitui a virgula pelo ponto
+            return $value; //retorna o valor formatado para gravar no banco
+        }
+
+        $finalValue = replacePoint($get_value);
+
+        $product->nameProduct = $request->input('name');
+        $product->descriptionProduct = $request->input('description');
+        $product->priceProduct = $finalValue;
+
+        $result = $product->save();
+
+        if($result){
+            return redirect("/dashboard")->with('created',"Produto atualizado com sucesso!");
+        }else{
+            return redirect("/dashboard")->with('error',"Ops! Falha ao atualizar as informações");
+        }
     }
 
     /**
