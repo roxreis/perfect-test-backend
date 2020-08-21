@@ -1,7 +1,7 @@
 <nav class="navbar bg-gradient-primary" id="navbar-main">
     <div class="container-fluid">
         <!-- Brand -->
-        <a class="" href="{{ url('/') }}">Teste Back End</a>
+        <a class="" href="/dashboard">Teste Back End</a>
         <!-- User -->
         <ul class="navbar-nav">
             <li class="nav-item dropdown">

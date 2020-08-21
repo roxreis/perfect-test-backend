@@ -4,44 +4,66 @@
     <h1>Adicionar / Editar Venda</h1>
     <div class='card'>
         <div class='card-body'>
-            <form>
+            <form name="formSale" action="/venda/cadastrar" method="POST">
+            @CSRF
+                @if(session("created"))
+                <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                    <strong>{{session("created")}}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            @if(session("error"))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{session("error")}}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
                 <h5>Informações do cliente</h5>
                 <div class="form-group">
                     <label for="name">Nome do cliente</label>
-                    <input type="text" class="form-control " id="name">
+                    <input name="name" type="text" class="form-control " id="name" >
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="text" class="form-control" id="email">
+                    <input name="email" type="text" class="form-control" id="email" >
                 </div>
                 <div class="form-group">
                     <label for="cpf">CPF</label>
-                    <input type="text" class="form-control" id="cpf" placeholder="99999999999">
+                    <input name="cpf" type="text" class="form-control" id="cpf" placeholder="99999999999"  >
                 </div>
                 <h5 class='mt-5'>Informações da venda</h5>
                 <div class="form-group">
                     <label for="product">Produto</label>
-                    <select id="product" class="form-control">
-                        <option selected>Escolha...</option>
-                        <option>...</option>
+                    <select name="product" id="product" class="form-control">
+                        <option selected >Escolha...</option>
+
+                        @foreach($products as $product)
+                            <option>{{$product->nameProduct}}</option>
+                        @endforeach
+
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="date">Data</label>
-                    <input type="text" class="form-control single_date_picker" id="date">
+                    <input name="date" type="text" class="form-control single_date_picker" id="date" >
                 </div>
                 <div class="form-group">
                     <label for="quantity">Quantidade</label>
-                    <input type="text" class="form-control" id="quantity" placeholder="1 a 10">
+                    <input  name="quantity" type="text" class="form-control" id="quantity" placeholder="1 a 10" >
                 </div>
                 <div class="form-group">
                     <label for="discount">Desconto</label>
-                    <input type="text" class="form-control" id="discount" placeholder="100,00 ou menor">
+                    <input name="discount" type="text" class="form-control" id="discount" placeholder="100,00 ou menor" >
                 </div>
                 <div class="form-group">
                     <label for="status">Status</label>
-                    <select id="status" class="form-control">
-                        <option selected>Escolha...</option>
+                    <select name="status" id="status" class="form-control">
+                        <option  selected>Escolha...</option>
                         <option>Aprovado</option>
                         <option>Cancelado</option>
                         <option>Devolvido</option>
@@ -51,4 +73,65 @@
             </form>
         </div>
     </div>
+
+
+<!-- validacao javascript do formulario -->
+<script type="text/javascript">
+
+    function validar_formSale() {
+        var name = formSale.name.value;
+        var email = formSale.email.value;
+        var cpf = formSale.cpf.value;
+        var product = formSale.product.value;
+        var date = formSale.date.value;
+        var quantity = formSale.quantity.value;
+        var discount = formSale.discount.value;
+        var status = formSale.status.value;
+
+        if (name == "") {
+            alert("Campo obrigatório.");
+            formSale.name.focus();
+            return false;
+        }
+        if (email == "") {
+            alert(
+                "Campo obrigatório."
+            );
+            formSale.email.focus();
+            return false;
+        }
+    
+        if (cpf == "" || cpf.length < 11) {
+            alert("Campo obrigatório.");
+            formSale.cpf.focus();
+            return false;
+        }
+        if (product == "") {
+            alert("Campo obrigatório.");
+            formSale.product.focus();
+            return false;
+        }
+        if (date == "") {
+            alert("Campo obrigatório.");
+            formSale.date.focus();
+            return false;
+        }
+        if (quantity < 1 || quantity > 10) {
+            alert("Campo obrigatório de 1 a 10.");
+            formSale.quantity.focus();
+            return false;
+        }
+        if (discount == "") {
+            alert("Campo obrigatório.");
+            formSale.discount.focus();
+            return false;
+        }
+        if (status == "") {
+            alert("Campo obrigatório.");
+            formSale.status.focus()
+            return false;
+        }
+    }
+
+</script>
 @endsection
