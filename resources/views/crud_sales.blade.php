@@ -4,8 +4,8 @@
     <h1>Adicionar / Editar Venda</h1>
     <div class='card'>
         <div class='card-body'>
-            <form name="formSale" action="/cadastrar" method="POST">
-            @CSRF
+            <form name="formSale" action="/venda/cadastrada" method="POST">
+                @CSRF
                 @if(session("created"))
                 <div class="alert alert-secondary alert-dismissible fade show" role="alert">
                     <strong>{{session("created")}}</strong>

@@ -15,19 +15,22 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nameCustomer');
-            $table->string('emailCustomer');
+            $table->unsignedBigInteger('product_id');
+            $table->string('nameCustomer', 300);
+            $table->string('emailCustomer', 150);
             $table->string('cpfCustomer');
             $table->date('date_sale');
             $table->tinyInteger('quantSale');
             $table->float('deductionSale');
-            $table->string('statustSale'); 
+            $table->string('statusSale'); 
+            $table->float('priceSale', 10, 2);
+            $table->string('name_product_sold', 300);
             // $table->unsignedBigInteger('user_id')->unique();         
             // $table->foreign('user_id')->references('id')->on('users');
             // $table->string('user_name',300)->unique();
             // $table->foreign('user_name')->references('name')->on('users');
-            $table->string('product_name');
-            // $table->foreign('product_name')->references('nameProduct')->on('products');
+            // 
+            $table->foreign('product_id')->references('id')->on('products');
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@
     <h1>Adicionar / Editar Produto</h1>
     <div class='card'>
         <div class='card-body'>
-            <form action="produto/cadastrar" method="POST">
+            <form action="/produto/cadastrar" method="POST">
                 @CSRF
                 @if(session("created"))
                 <div class="alert alert-secondary alert-dismissible fade show" role="alert">

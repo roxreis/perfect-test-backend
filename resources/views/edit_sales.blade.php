@@ -4,10 +4,10 @@
     <h1>Adicionar / Editar Venda</h1>
     <div class='card'>
         <div class='card-body'>
-            <form action="venda/atualizar" method="POST" name="formEditSale">
+            <form action="/atualiza" method="POST" name="formEditSale">
             @CSRF
             @method('PUT')
-             <!-- input hidden com o id do admin em Users -->
+            
              <input type="text" hidden value="{{ $sales->id }}">
 
                 @if(session("created"))
@@ -30,7 +30,7 @@
                 <h5>Informações do cliente</h5>
                 <div class="form-group">
                     <label for="name">Nome do cliente</label>
-                    <input value="{{$sales->nameCustomer}}"name="name" type="text" class="form-control " id="name" >
+                    <input value="{{$sales->nameCustomer}}" disabled="" name="name" type="text" class="form-control " id="name" style="color:#bdbdbd;" >
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -44,21 +44,21 @@
                 <div class="form-group">
                     <label for="product">Produto</label>
                     <select name="product" id="product" class="form-control">
-                        <option selected >Escolha...</option>
+                        <option >Escolha...</option>
 
                         @foreach($products as $product)
-                            <option>{{$product->nameProduct}}</option>
+                            <option selected>{{$product->nameProduct}}</option>
                         @endforeach
 
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="date">Data</label>
-                    <input value="{{$sales->date_sale}}" name="date" type="text" class="form-control single_date_picker" id="date" >
+                    <input value="{{$sales->date_sale}}" name="date" type="text" class="form-control" id="date" >
                 </div>
                 <div class="form-group">
                     <label for="quantity">Quantidade</label>
-                    <input  name="quantity" type="text" class="form-control" id="quantity" placeholder="1 a 10" >
+                    <input  value="{{$sales->quantSale}}" name="quantity" type="text" class="form-control" id="quantity" placeholder="1 a 10" >
                 </div>
                 <div class="form-group">
                     <label for="discount">Desconto</label>
@@ -66,11 +66,11 @@
                 </div>
                 <div class="form-group">
                     <label for="status">Status</label>
-                    <select name="status" id="status" class="form-control">
-                        <option  selected>Escolha...</option>
-                        <option>Aprovado</option>
-                        <option>Cancelado</option>
-                        <option>Devolvido</option>
+                    <select  name="status" id="status" class="form-control">
+                        <option selected >Escolha...</option>
+                            <option>Aprovado</option>
+                            <option>Cancelado</option>
+                            <option>Devolvido</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Salvar</button>

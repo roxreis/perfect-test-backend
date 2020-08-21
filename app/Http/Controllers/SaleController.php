@@ -39,7 +39,9 @@ class SaleController extends Controller
      */
     public function storeSale(Request $request)
     {
-        $sales = new Sale();
+        
+       
+        
 
         //armazanendo valor do input price em variável para usar na função abaixo
         $get_value = $request->input('discount');
@@ -58,14 +60,35 @@ class SaleController extends Controller
         $formatDate = $request->input('date');
         $formatDate = date('Y-m-d H:i:s');
 
+        
+        function calculateDeduction() {
+
+            $product = new Product();
+            $sales = new Sale();
+            $value = $product->priceProduct - $sales->deductionSale;
+
+            return $value;
+        }
+        
+
+        $finalPrice = calculateDeduction();
+
+        
+
+        $sales = new Sale();
         $sales->nameCustomer = $request->input('name');
         $sales->emailCustomer = $request->input('email');
         $sales->cpfCustomer = $request->input('cpf');
-        $sales->product_name = $request->input('product');
+        $sales->name_product_sold = $request->input('product');
         $sales->date_sale = $formatDate;
         $sales->quantSale = $request->input('quantity');
         $sales->deductionSale = $finalValue;
-        $sales->statustSale = $request->input('status');
+        $sales->statusSale = $request->input('status');
+        $sales->priceSale = $finalPrice;
+        
+        $product = Product::where('nameProduct', $request->input('product'))->first();
+        $sales->product_id = $product->id;
+        
         // $sales['user_id'] = Auth::user()->id;
         // $sales['user_name'] = Auth::user()->name;
         $result = $sales->save();
@@ -102,8 +125,9 @@ class SaleController extends Controller
     public function editSale(Request $request, $id=0)
     {   
         $sales = Sale::find($id);
+        $formatDateSale = $sales->date_sale = date('d/m/Y');
         $products = Product::all();
-            return view('edit_sales', compact('sales', 'products'));
+            return view('edit_sales', compact('sales', 'products', 'formatDateSale'));
     }
 
     /**
@@ -136,11 +160,11 @@ class SaleController extends Controller
         $sales->nameCustomer = $request->input('name');
         $sales->emailCustomer = $request->input('email');
         $sales->cpfCustomer = $request->input('cpf');
-        $sales->product_name = $request->input('product');
         $sales->date_sale = $formatDate;
         $sales->quantSale = $request->input('quantity');
         $sales->deductionSale = $finalValue;
-        $sales->statustSale = $request->input('status');
+        $sales->statusSale = $request->input('status');
+        $sales->name_product_sold = $request->input('product');
         // $sales['user_id'] = Auth::user()->id;
         // $sales['user_name'] = Auth::user()->name;
         $result = $sales->save();

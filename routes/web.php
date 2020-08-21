@@ -31,9 +31,9 @@ Route::group(['prefix'=>'produto'], function(){
 });
 
 Route::group(['prefix'=>'venda'], function(){
-    Route::post('/cadastrar', 'SaleController@storeSale');
-    Route::get('/cadastrar', 'SaleController@storeSale');
+    Route::post('/cadastrada', 'SaleController@storeSale');
+    Route::get('/cadastrada', 'SaleController@storeSale');
     Route::get('/nova', 'SaleController@createNewSale');
-    Route::put('/atualizar', 'SaleController@updateSale'); 
+    Route::put('/atualiza', 'SaleController@updateSale'); 
     Route::get('/editar/{id?}', 'SaleController@editSale'); 
 });

@@ -14,12 +14,12 @@ class Product extends Model
         'id', 
         'created_at', 
         'update_at', 
-        'user_id', 
-        'user_name'];
+    ];
 
 
-    public function user(){
-        return $this->belongsTo('App\User');
-        // para vincular a criacao do produto ao id do usuario que o cadastrou.
+    public function sale(){
+        
+        return $this->hasOne(Sale::class, 'product_id', 'id');
+        
     }
 }

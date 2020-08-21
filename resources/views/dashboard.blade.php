@@ -5,7 +5,7 @@
     <div class='card mt-3'>
         <div class='card-body'>
             <h5 class="card-title mb-5">Tabela de vendas
-                <a href='/nova' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Nova venda</a></h5>
+                <a href='/venda/nova' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>Nova venda</a></h5>
             <form>
                 <div class="form-row align-items-center">
                     <div class="col-sm-5 my-1">
@@ -55,16 +55,20 @@
                 </tr>
                 @foreach($sales as $sale) 
                     <tr>
+                        <td>
+                            {{$sale->name_product_sold}}
+                        </td>
                         
                         <td>
-                            {{$sale->nameProduct}}
+                            {{$formatDateSale}}
                         </td>
+                        
                         <td>
-                            {{$sale->date_sale}}
+                        
+                            {{$sale->priceSale}}
+                        
                         </td>
-                        <td>
-                            <!-- $product->priceProduct -->
-                        </td>
+                        
                         <td>
                             <a href="/editar/{{$sale->id}}" class='btn btn-primary'>Editar</a>
                         </td>
@@ -92,35 +96,13 @@
                     
                     <tr>
                         <td>
-                        </td>
-                       
-                        <td>
-                            
+                            {{$sale->statusSale}}
                         </td>
                         <td>
-                            R$ 100,00
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Cancelados
+                            {{$sale->quantSale}}
                         </td>
                         <td>
-                            120
-                        </td>
-                        <td>
-                            R$ 100,00
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Devoluções
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            R$ 100,00
+                            {{$sale->priceSale}}
                         </td>
                     </tr>
                 @endforeach 
@@ -144,18 +126,18 @@
                         Ações
                     </th>
                 </tr>
+                @foreach($products as $product)
                     <tr>
-                        @foreach($products as $product)
-                            <td>
-                                {{$product->nameProduct}}
-                            </td>
-                            <td>
-                                {{$product->priceProduct}}
-                            </td>
-                        @endforeach
+                        <td>
+                            {{$product->nameProduct}}
+                        </td>
+                        <td>
+                            {{$product->priceProduct}}
+                        </td>
                         <td>
                             <a href='' class='btn btn-primary'>Editar</a>
                         </td>
+                @endforeach
                     </tr>
              </table>
         </div>
