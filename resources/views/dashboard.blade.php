@@ -70,7 +70,7 @@
                         </td>
                         
                         <td>
-                            <a href="/editar/{{$sale->id}}" class='btn btn-primary'>Editar</a>
+                            <a href="/venda/editar/{{$sale->id}}" class='btn btn-primary'>Editar</a>
                         </td>
                     </tr>
                 @endforeach
