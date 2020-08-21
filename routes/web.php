@@ -35,4 +35,5 @@ Route::group(['prefix'=>'venda'], function(){
     Route::get('/cadastrar', 'SaleController@storeSale');
     Route::get('/nova', 'SaleController@createNewSale');
     Route::put('/atualizar', 'SaleController@updateSale'); 
+    Route::get('/editar/{id?}', 'SaleController@editSale'); 
 });

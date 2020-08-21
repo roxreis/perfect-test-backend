@@ -5,7 +5,7 @@
     <div class='card mt-3'>
         <div class='card-body'>
             <h5 class="card-title mb-5">Tabela de vendas
-                <a href='venda/nova' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Nova venda</a></h5>
+                <a href='/nova' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Nova venda</a></h5>
             <form>
                 <div class="form-row align-items-center">
                     <div class="col-sm-5 my-1">
@@ -55,17 +55,18 @@
                 </tr>
                 @foreach($sales as $sale) 
                     <tr>
+                        
                         <td>
                             {{$sale->nameProduct}}
                         </td>
                         <td>
-                            {{$sale->dateSale}}
+                            {{$sale->date_sale}}
                         </td>
                         <td>
-                            {{$product->priceProduct}}
+                            <!-- $product->priceProduct -->
                         </td>
                         <td>
-                            <a href='' class='btn btn-primary'>Editar</a>
+                            <a href="/editar/{{$sale->id}}" class='btn btn-primary'>Editar</a>
                         </td>
                     </tr>
                 @endforeach
@@ -88,17 +89,13 @@
                     </th>
                 </tr>
                 @foreach($sales as $sale) 
-                    sumSale = $sale->quantSale
+                    
                     <tr>
                         <td>
-                        @for($i=0; $i< count(sumSale); $i++)
-                            return $total = i*$sale
-                        @endfor
-                            {{$total}}
                         </td>
                        
                         <td>
-                            {{sale}}
+                            
                         </td>
                         <td>
                             R$ 100,00

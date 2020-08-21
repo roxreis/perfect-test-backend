@@ -13,8 +13,7 @@ class SiteController extends Controller
     {
         $sales = Sale::all();
         $products = Product::all();
-        return view('dashboard')->with(['sales'=>$sales])
-                                ->with(['products'=>$products]);
+        return view('dashboard', compact('sales', 'products'));
 
     }
 

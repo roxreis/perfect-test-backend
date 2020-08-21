@@ -89,7 +89,8 @@ class SaleController extends Controller
      */
     public function show(Sale $sale)
     {
-        //
+     
+        
     }
 
     /**
@@ -98,9 +99,11 @@ class SaleController extends Controller
      * @param  \App\Sale  $sale
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sale $sale)
-    {
-        //
+    public function editSale(Request $request, $id=0)
+    {   
+        $sales = Sale::find($id);
+        $products = Product::all();
+            return view('edit_sales', compact('sales', 'products'));
     }
 
     /**
@@ -110,9 +113,45 @@ class SaleController extends Controller
      * @param  \App\Sale  $sale
      * @return \Illuminate\Http\Response
      */
-    public function updateSale(Request $request, Sale $sale)
+    public function updateSale(Request $request, $id)
     {
-        //
+        $sales = Sale::find($id);
+
+        $get_value = $request->input('discount');
+
+        function replacePoint($get_value) {
+            //função para alterar a virgula nos valores que vem do formulario para ponto
+            $source = array('.', ',');
+            $replace = array('', '.');
+            $value = str_replace($source, $replace, $get_value); //remove os pontos e substitui a virgula pelo ponto
+            return $value; //retorna o valor formatado para gravar no banco
+        }
+
+        $finalValue = replacePoint($get_value);
+        
+        //pegando o valor do input data e colocando em variável para formatar conforme padrão do banco de dados
+        $formatDate = $request->input('date');
+        $formatDate = date('Y-m-d H:i:s');
+
+        $sales->nameCustomer = $request->input('name');
+        $sales->emailCustomer = $request->input('email');
+        $sales->cpfCustomer = $request->input('cpf');
+        $sales->product_name = $request->input('product');
+        $sales->date_sale = $formatDate;
+        $sales->quantSale = $request->input('quantity');
+        $sales->deductionSale = $finalValue;
+        $sales->statustSale = $request->input('status');
+        // $sales['user_id'] = Auth::user()->id;
+        // $sales['user_name'] = Auth::user()->name;
+        $result = $sales->save();
+
+        if($result) {
+            
+            // Passando um parâmetro via session no redirect na view verifico a session para exibir a mensagem de sucesso)
+            return redirect("/dashboardr")->with('created',"Venda atualizada com sucesso!");
+           }else{
+            return redirect("/dashboardr")->with('error',"Ops! Falha ao atualizar as informações");
+        }
     }
 
     /**

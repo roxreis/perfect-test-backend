@@ -4,8 +4,12 @@
     <h1>Adicionar / Editar Venda</h1>
     <div class='card'>
         <div class='card-body'>
-            <form name="formSale" action="/cadastrar" method="POST">
+            <form action="venda/atualizar" method="POST" name="formEditSale">
             @CSRF
+            @method('PUT')
+             <!-- input hidden com o id do admin em Users -->
+             <input type="text" hidden value="{{ $sales->id }}">
+
                 @if(session("created"))
                 <div class="alert alert-secondary alert-dismissible fade show" role="alert">
                     <strong>{{session("created")}}</strong>
@@ -26,15 +30,15 @@
                 <h5>Informações do cliente</h5>
                 <div class="form-group">
                     <label for="name">Nome do cliente</label>
-                    <input name="name" type="text" class="form-control " id="name" >
+                    <input value="{{$sales->nameCustomer}}"name="name" type="text" class="form-control " id="name" >
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input name="email" type="text" class="form-control" id="email" >
+                    <input value="{{$sales->emailCustomer}}" name="email" type="text" class="form-control" id="email" >
                 </div>
                 <div class="form-group">
                     <label for="cpf">CPF</label>
-                    <input name="cpf" type="text" class="form-control" id="cpf" placeholder="99999999999"  >
+                    <input value="{{$sales->cpfCustomer}}" disabled="" name="cpf" type="text" class="form-control" id="cpf" placeholder="99999999999" style="color:#bdbdbd;" >
                 </div>
                 <h5 class='mt-5'>Informações da venda</h5>
                 <div class="form-group">
@@ -50,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label for="date">Data</label>
-                    <input name="date" type="text" class="form-control single_date_picker" id="date" >
+                    <input value="{{$sales->date_sale}}" name="date" type="text" class="form-control single_date_picker" id="date" >
                 </div>
                 <div class="form-group">
                     <label for="quantity">Quantidade</label>
@@ -58,7 +62,7 @@
                 </div>
                 <div class="form-group">
                     <label for="discount">Desconto</label>
-                    <input name="discount" type="text" class="form-control" id="discount" placeholder="100,00 ou menor" >
+                    <input value="{{$sales->deductionSale}}" name="discount" type="text" class="form-control" id="discount" placeholder="100,00 ou menor" >
                 </div>
                 <div class="form-group">
                     <label for="status">Status</label>
@@ -74,64 +78,3 @@
         </div>
     </div>
 @endsection
-
-<!-- validacao javascript do formulario -->
-<script type="text/javascript">
-
-    function validar_formSale() {
-        var name = formSale.name.value;
-        var email = formSale.email.value;
-        var cpf = formSale.cpf.value;
-        var product = formSale.product.value;
-        var date = formSale.date.value;
-        var quantity = formSale.quantity.value;
-        var discount = formSale.discount.value;
-        var status = formSale.status.value;
-
-        if (name == "") {
-            alert("Campo obrigatório.");
-            formSale.name.focus();
-            return false;
-        }
-        if (email == "") {
-            alert(
-                "Campo obrigatório."
-            );
-            formSale.email.focus();
-            return false;
-        }
-    
-        if (cpf == "" || cpf.length < 11) {
-            alert("Campo obrigatório.");
-            formSale.cpf.focus();
-            return false;
-        }
-        if (product == "") {
-            alert("Campo obrigatório.");
-            formSale.product.focus();
-            return false;
-        }
-        if (date == "") {
-            alert("Campo obrigatório.");
-            formSale.date.focus();
-            return false;
-        }
-        if (quantity < 1 || quantity > 10) {
-            alert("Campo obrigatório de 1 a 10.");
-            formSale.quantity.focus();
-            return false;
-        }
-        if (discount == "") {
-            alert("Campo obrigatório.");
-            formSale.discount.focus();
-            return false;
-        }
-        if (status == "") {
-            alert("Campo obrigatório.");
-            formSale.status.focus()
-            return false;
-        }
-    }
-
-</script>
-
