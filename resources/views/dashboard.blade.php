@@ -32,12 +32,10 @@
                                 <div class="input-group-text">Clientes</div>
                             </div>
                             <select class="form-control" id="inlineFormInputName">
-                                <option>Clientes</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                <option selected >Clientes</option>
+                                @foreach($sales as $sale)
+                                    <option>{{$sale->nameCustomer}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -82,9 +80,7 @@
                         </td>
                         
                         <td>
-                        
                             {{$sale->priceSale}}
-                        
                         </td>
                         
                         <td>
@@ -119,8 +115,8 @@
                         <td>
                             {{$sale->quantSale}}
                         </td>
-                        <td>
-                            {{$sale->priceSale}}
+                        <td> 
+                            {{$sale->priceSale}}                                                    
                         </td>
                     </tr>
                 @endforeach 

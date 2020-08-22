@@ -23,7 +23,6 @@ class CreateSalesTable extends Migration
             $table->tinyInteger('quantSale');
             $table->float('deductionSale');
             $table->string('statusSale'); 
-            $table->float('priceSale', 10, 2);
             $table->string('name_product_sold', 300);
             // $table->unsignedBigInteger('user_id')->unique();         
             // $table->foreign('user_id')->references('id')->on('users');

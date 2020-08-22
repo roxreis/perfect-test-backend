@@ -40,9 +40,6 @@ class SaleController extends Controller
     public function storeSale(Request $request)
     {
         
-       
-        
-
         //armazanendo valor do input price em variável para usar na função abaixo
         $get_value = $request->input('discount');
 
@@ -55,26 +52,13 @@ class SaleController extends Controller
         }
 
         $finalValue = replacePoint($get_value);
-        
+
+               
         //pegando o valor do input data e colocando em variável para formatar conforme padrão do banco de dados
         $formatDate = $request->input('date');
         $formatDate = date('Y-m-d H:i:s');
 
         
-        function calculateDeduction() {
-
-            $product = new Product();
-            $sales = new Sale();
-            $value = $product->priceProduct - $sales->deductionSale;
-
-            return $value;
-        }
-        
-
-        $finalPrice = calculateDeduction();
-
-        
-
         $sales = new Sale();
         $sales->nameCustomer = $request->input('name');
         $sales->emailCustomer = $request->input('email');
@@ -84,13 +68,10 @@ class SaleController extends Controller
         $sales->quantSale = $request->input('quantity');
         $sales->deductionSale = $finalValue;
         $sales->statusSale = $request->input('status');
-        $sales->priceSale = $finalPrice;
-        
+               
         $product = Product::where('nameProduct', $request->input('product'))->first();
         $sales->product_id = $product->id;
-        
-        // $sales['user_id'] = Auth::user()->id;
-        // $sales['user_name'] = Auth::user()->name;
+
         $result = $sales->save();
 
         if($result) {
@@ -110,11 +91,7 @@ class SaleController extends Controller
      * @param  \App\Sale  $sale
      * @return \Illuminate\Http\Response
      */
-    public function show(Sale $sale)
-    {
-     
-        
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -156,17 +133,6 @@ class SaleController extends Controller
         //pegando o valor do input data e colocando em variável para formatar conforme padrão do banco de dados
         $formatDate = $request->input('date');
         $formatDate = date('Y-m-d H:i:s');
-
-        function calculateDeduction() {
-
-            $product = new Product();
-            $sales = new Sale();
-            $value = $product->priceProduct - $sales->deductionSale;
-
-            return $value;
-        }
-        
-        $finalPrice = calculateDeduction();
 
         $sales->nameCustomer = $request->input('name');
         $sales->emailCustomer = $request->input('email');

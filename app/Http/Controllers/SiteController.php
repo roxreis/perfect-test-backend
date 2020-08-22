@@ -16,6 +16,8 @@ class SiteController extends Controller
         $products = Product::all();
         return view('dashboard', compact('sales', 'products', 'formatDateSale'));
 
+        
+   
     }
 
 
