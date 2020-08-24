@@ -8,18 +8,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Product extends Model
 {
     protected $fillable = [
-        'nameProduct', 
-        'descriptionProduct', 
-        'priceProduct', 
-        'id', 
+        'name_product', 
+        'description_product', 
+        'price_Product', 
+        'product_id',
+        'image_product', 
         'created_at', 
         'update_at', 
     ];
 
 
-    public function sale(){
-        
-        return $this->hasOne(Sale::class, 'product_id', 'id');
-        
-    }
+
 }

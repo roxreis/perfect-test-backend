@@ -24,18 +24,26 @@
                 </div>
             @endif
                 <h5>Informações do cliente</h5>
-                <div class="form-group">
-                    <label for="name">Nome do cliente</label>
-                    <input name="name" type="text" class="form-control " id="name" >
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input name="email" type="text" class="form-control" id="email" >
-                </div>
-                <div class="form-group">
-                    <label for="cpf">CPF</label>
-                    <input name="cpf" type="text" class="form-control" id="cpf" placeholder="99999999999"  >
-                </div>
+                @foreach($customers as $customer)
+                    <div class="form-group">
+                        <label for="name">Nome do cliente</label>
+                        <select name="name" type="text" class="form-control " id="name" >
+                        <option selected>Escolha...</option>
+                    
+                            <option>{{$customer->name_customer}}</option>
+                    
+                    </div>
+                    @if($customer->name_customer)
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input Value="{{$customer->email_customer}}" disable="" name="email" type="text" class="form-control" id="email" >
+                        </div>
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+                            <input  Value="{{$customer->cpf_customer}}" disable="" name="cpf" type="text" class="form-control" id="cpf" placeholder="99999999999"  >
+                        </div>
+                    @endif
+                @endforeach
                 <h5 class='mt-5'>Informações da venda</h5>
                 <div class="form-group">
                     <label for="product">Produto</label>

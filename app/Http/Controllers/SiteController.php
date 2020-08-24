@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Sale;
 use App\Product;
+use App\Customer;
 
 
 class SiteController extends Controller
@@ -12,12 +13,13 @@ class SiteController extends Controller
     public function viewDashboard()
     {
         $sales = Sale::all();
-        $formatDateSale = $sales->date_sale = date('d/m/Y');
+        $customers = Customer::all;
         $products = Product::all();
-        return view('dashboard', compact('sales', 'products', 'formatDateSale'));
 
-        
-   
+        //variável contento a formatação desejada de data
+        $formatDateSale = $sales->date_sale = date('d/m/Y');
+        return view('dashboard', compact('sales', 'products', 'customers', 'formatDateSale'));
+
     }
 
 

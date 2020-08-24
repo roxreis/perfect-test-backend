@@ -15,15 +15,10 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->bigIncrements('sales_id');
-            $table->unsignedBigInteger('product_id');
-            $table->string('nameCustomer', 300);
-            $table->string('emailCustomer', 150);
-            $table->string('cpfCustomer');
             $table->date('date_sale');
-            $table->tinyInteger('quantSale');
-            $table->float('deductionSale');
-            $table->string('statusSale'); 
-            $table->string('name_product_sold', 300);
+            $table->tinyInteger('quant_sale');
+            $table->float('deduction_sale', 10, 2);
+            $table->string('status_sale', 100); 
             $table->unsignedBigInteger('sales_customer_id')->unique();         
             $table->foreign('sales_customer_id')->references('customer_id')->on('customers');
             $table->unsignedBigInteger('sales_product_id')->unique();

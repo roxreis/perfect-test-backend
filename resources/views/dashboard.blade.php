@@ -22,8 +22,12 @@
             </div>
         @endif
         <div class='card-body'>
-            <h5 class="card-title mb-5">Tabela de vendas
-                <a href='/venda/nova' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>Nova venda</a></h5>
+            <div class="d-flex ml-5" >
+                <h5 class="card-title mb-5">Tabela de vendas
+               <a href='/cliente/novo' class='btn btn-secondary float-right btn-sm rounded-pill' style="margin:0 20px 0 368px ;" ><i class='fa fa-plus'></i>Novo cliente</a></h5>
+               <h5> <a href='/venda/nova' class='btn btn-secondary float-right btn-sm rounded-pill ' ><i class='fa fa-plus'></i>Nova venda</a></h5>
+                
+            </div>
             <form>
                 <div class="form-row align-items-center">
                     <div class="col-sm-5 my-1">
@@ -110,13 +114,13 @@
                     
                     <tr>
                         <td>
-                            {{$sale->statusSale}}
+                            {{$sale->status_sale}}
                         </td>
                         <td>
-                            {{$sale->quantSale}}
+                            {{$sale->quant_sale}}
                         </td>
                         <td> 
-                            {{$sale->priceSale}}                                                    
+                                                                                
                         </td>
                     </tr>
                 @endforeach 
@@ -137,16 +141,22 @@
                         Valor
                     </th>
                     <th scope="col">
+                        Imagem
+                    </th>
+                    <th scope="col">
                         Ações
                     </th>
                 </tr>
                 @foreach($products as $product)
                     <tr>
                         <td>
-                            {{$product->nameProduct}}
+                            {{$product->name_product}}
                         </td>
                         <td>
-                            {{$product->priceProduct}}
+                            {{$product->price_product}}
+                        </td>
+                        <td>
+                            <img src="{{asset('storage/'.$product->image_product)}}" style="height:10vh;" alt="imagem do produto">
                         </td>
                         <td>
                             <a href="/produto/editar/{{$product->id}}" class='btn btn-primary'>Editar</a>

@@ -19,6 +19,10 @@
                     <label for="price">Preço</label>
                     <input name="price" type="text" value="{{$products->priceProduct}}" class="form-control" id="price" placeholder="100,00 ou maior">
                 </div>
+                <div class="form-group">
+                    <label for="image">Fotos do produto</label>
+                    <input type="file" class="form-control" name="image" placeholder="Imagem do Produto" />
+                </div>
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
         </div>

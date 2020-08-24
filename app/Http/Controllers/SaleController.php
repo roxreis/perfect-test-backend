@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Sale;
 use App\Product;
+use App\Customer;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -24,10 +25,12 @@ class SaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createNewSale()
+    public function createSale()
     {
         $products = Product::all();
-        return view('crud_sales')->with(['products'=>$products]);
+        $customers = Customer::all();
+        return view('dashboard', compact('customers', 'products'));
+
     
     }
 
@@ -60,18 +63,13 @@ class SaleController extends Controller
 
         
         $sales = new Sale();
-        $sales->nameCustomer = $request->input('name');
-        $sales->emailCustomer = $request->input('email');
-        $sales->cpfCustomer = $request->input('cpf');
-        $sales->name_product_sold = $request->input('product');
         $sales->date_sale = $formatDate;
-        $sales->quantSale = $request->input('quantity');
-        $sales->deductionSale = $finalValue;
-        $sales->statusSale = $request->input('status');
+        $sales->quant_sale = $request->input('quantity');
+        $sales->deduction_sale = $finalValue;
+        $sales->status_sale = $request->input('status');
+        $sales->sales_customer_id = Customer::find($request->customer_id);
+        $sales->sales_product_id = Products::find($request->products_id);
                
-        $product = Product::where('nameProduct', $request->input('product'))->first();
-        $sales->product_id = $product->id;
-
         $result = $sales->save();
 
         if($result) {

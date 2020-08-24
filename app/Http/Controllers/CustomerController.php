@@ -22,9 +22,9 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createCustomer()
     {
-        //
+       return view('/crud_customer');
     }
 
     /**
@@ -33,9 +33,26 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeCustomer(Request $request)
     {
-        //
+        if($request->isMethod('GET')){
+            return view('/crud_customer');
+        }
+
+        $customer = new Customer();
+        $customer->name_customer =  $request->input('name');
+        $customer->cpf_customer = $request->input('cpf');
+        $customer->email_customer = $request->input('email');
+
+        $result = $customer->save();
+
+        if($result) {
+            
+            // Passando um parâmetro via session no redirect na view verifico a session para exibir a mensagem de sucesso)
+            return redirect("/cliente/novo")->with('created',"Cliente cadastrado com sucesso!");
+           }else{
+            return redirect("/cliente/novo")->with('error',"Ops! Falha ao salvar as informações");
+        }
     }
 
     /**

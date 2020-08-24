@@ -24,7 +24,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createNewProduct()
+    public function createProduct()
     {
         return view('crud_products');
     }
@@ -53,11 +53,17 @@ class ProductController extends Controller
             return $value; //retorna o valor formatado para gravar no banco
         }
 
-        $finalValue = replacePoint($get_value);
+        $priceWithDot = replacePoint($get_value);
 
-        $product->nameProduct = $request->input('name');
-        $product->descriptionProduct = $request->input('description');
-        $product->priceProduct = $finalValue;
+        $product->name_product = $request->input('name');
+        $product->description_product = $request->input('description');
+        $product->price_product = $priceWithDot;
+        $product->image_product = $request->input('image');
+       
+
+       if($request->hasFile('image')){
+           $product->image_product = $request->image->store('images');
+       }
 
         $result = $product->save();
 
@@ -115,9 +121,15 @@ class ProductController extends Controller
 
         $finalValue = replacePoint($get_value);
 
-        $product->nameProduct = $request->input('name');
-        $product->descriptionProduct = $request->input('description');
-        $product->priceProduct = $finalValue;
+        $product->name_product = $request->input('name');
+        $product->description_product = $request->input('description');
+        $product->price_product = $priceWithDot;
+        $product->product_image = $request->input('image');
+       
+
+       if($request->hasFile('image')){
+           $product->product_image = $request->image->store('images');
+       }
 
         $result = $product->save();
 
