@@ -1,0 +1,22 @@
+[33mMigrating:[39m 2020_08_24_204951_create_sales_table
+
+  [41;1m Illuminate\Database\QueryException [49;22m
+
+[39;1m  SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'sales' already exists (SQL: create table `sales` (`sales_id` bigint unsigned not null auto_increment primary key, `product_id` bigint unsigned not null, `nameCustomer` varchar(300) not null, `emailCustomer` varchar(150) not null, `cpfCustomer` varchar(255) not null, `date_sale` date not null, `quantSale` tinyint not null, `deductionSale` double(8, 2) not null, `statusSale` varchar(255) not null, `name_product_sold` varchar(300) not null, `sales_customer_id` bigint unsigned not null, `sales_product_id` bigint unsigned not null, `created_at` timestamp null, `updated_at` timestamp null) default character set utf8mb4 collate 'utf8mb4_unicode_ci')[39;22m
+
+  at [32mC:\xampp\htdocs\perfect-test-backend\vendor\laravel\framework\src\Illuminate\Database\Connection.php[39m:[32m671[39m
+    667|         // If an exception occurs when attempting to run a query, we'll format the error
+    668|         // message to include the bindings with SQL, which will make this exception a
+    669|         // lot more helpful to the developer instead of just the database's errors.
+    670|         catch (Exception $e) {
+  > 671|             throw new QueryException(
+    672|                 $query, $this->prepareBindings($bindings), $e
+    673|             );
+    674|         }
+    675|
+
+  [33m1   [39m[39;1mC:\xampp\htdocs\perfect-test-backend\vendor\laravel\framework\src\Illuminate\Database\Connection.php[39;22m:[39;1m464[39;22m
+  [37m    PDOException::("SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'sales' already exists")[39m
+
+  [33m2   [39m[39;1mC:\xampp\htdocs\perfect-test-backend\vendor\laravel\framework\src\Illuminate\Database\Connection.php[39;22m:[39;1m464[39;22m
+  [37m    PDOStatement::execute()[39m

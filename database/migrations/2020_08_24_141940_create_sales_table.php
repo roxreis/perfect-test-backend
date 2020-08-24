@@ -14,7 +14,7 @@ class CreateSalesTable extends Migration
     public function up()
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('sales_id');
             $table->unsignedBigInteger('product_id');
             $table->string('nameCustomer', 300);
             $table->string('emailCustomer', 150);
@@ -24,13 +24,11 @@ class CreateSalesTable extends Migration
             $table->float('deductionSale');
             $table->string('statusSale'); 
             $table->string('name_product_sold', 300);
-            // $table->unsignedBigInteger('user_id')->unique();         
-            // $table->foreign('user_id')->references('id')->on('users');
-            // $table->string('user_name',300)->unique();
-            // $table->foreign('user_name')->references('name')->on('users');
-            // 
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->timestamps();
+            $table->unsignedBigInteger('sales_customer_id')->unique();         
+            $table->foreign('sales_customer_id')->references('customer_id')->on('customers');
+            $table->unsignedBigInteger('sales_product_id')->unique();
+            $table->foreign('sales_product_id')->references('product_id')->on('products');
+          
         });
     }
 
@@ -43,4 +41,4 @@ class CreateSalesTable extends Migration
     {
         Schema::dropIfExists('sales');
     }
-}
+} 
