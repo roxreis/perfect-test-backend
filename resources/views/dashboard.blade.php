@@ -22,11 +22,9 @@
             </div>
         @endif
         <div class='card-body'>
-            <div class="d-flex ml-5" >
+            <div class=" ml-5" >
                 <h5 class="card-title mb-5">Tabela de vendas
-               <a href='/cliente/novo' class='btn btn-secondary float-right btn-sm rounded-pill' style="margin:0 20px 0 368px ;" ><i class='fa fa-plus'></i>Novo cliente</a></h5>
-               <h5> <a href='/venda/nova' class='btn btn-secondary float-right btn-sm rounded-pill ' ><i class='fa fa-plus'></i>Nova venda</a></h5>
-                
+                <a href='/venda/nova' class='btn btn-secondary float-right btn-sm rounded-pill ' ><i class='fa fa-plus'></i>Nova venda</a></h5>                
             </div>
             <form>
                 <div class="form-row align-items-center">
@@ -37,8 +35,8 @@
                             </div>
                             <select class="form-control" id="inlineFormInputName">
                                 <option selected >Clientes</option>
-                                @foreach($sales as $sale)
-                                    <option>{{$sale->nameCustomer}}</option>
+                                @foreach($customers as $customer)
+                                    <option>{{$customer->name_customer}}</option>
                                 @endforeach
                             </select>
                         </div>

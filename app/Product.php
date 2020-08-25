@@ -7,6 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Product extends Model
 {
+   
+    protected $table = "products"; 
+   
     protected $fillable = [
         'name_product', 
         'description_product', 
@@ -17,6 +20,10 @@ class Product extends Model
         'update_at', 
     ];
 
+    public function saleProduct(){
+        return $this->hasOne('App\Sale', 'product_id', 'sales_product_id');
+        
+    }
 
 
 }

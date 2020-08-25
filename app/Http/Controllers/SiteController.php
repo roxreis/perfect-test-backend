@@ -13,11 +13,12 @@ class SiteController extends Controller
     public function viewDashboard()
     {
         $sales = Sale::all();
-        $customers = Customer::all;
+        $customers = Customer::all();
         $products = Product::all();
 
         //variável contento a formatação desejada de data
         $formatDateSale = $sales->date_sale = date('d/m/Y');
+        
         return view('dashboard', compact('sales', 'products', 'customers', 'formatDateSale'));
 
     }

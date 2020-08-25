@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Sale;
 use App\Product;
 use App\Customer;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -27,9 +28,8 @@ class SaleController extends Controller
      */
     public function createSale()
     {
-        $products = Product::all();
-        $customers = Customer::all();
-        return view('dashboard', compact('customers', 'products'));
+        $products  = Product::all();
+        return view('crud_sales', compact('products'));
 
     
     }
@@ -48,9 +48,9 @@ class SaleController extends Controller
 
         function replacePoint($get_value) {
             //função para alterar a virgula nos valores que vem do formulario para ponto
-            $source = array('.', ',');
+            $source  = array('.', ',');
             $replace = array('', '.');
-            $value = str_replace($source, $replace, $get_value); //remove os pontos e substitui a virgula pelo ponto
+            $value   = str_replace($source, $replace, $get_value); //remove os pontos e substitui a virgula pelo ponto
             return $value; //retorna o valor formatado para gravar no banco
         }
 
@@ -61,26 +61,39 @@ class SaleController extends Controller
         $formatDate = $request->input('date');
         $formatDate = date('Y-m-d H:i:s');
 
+        //criando cadastro do usuario no banco
+        $customer                 = new Customer();
+        $customer->name_customer  = $request->input('name');
+        $customer->cpf_customer   = $request->input('cpf');
+        $customer->email_customer = $request->input('email');
+
         
-        $sales = new Sale();
-        $sales->date_sale = $formatDate;
-        $sales->quant_sale = $request->input('quantity');
-        $sales->deduction_sale = $finalValue;
-        $sales->status_sale = $request->input('status');
-        $sales->sales_customer_id = Customer::find($request->customer_id);
-        $sales->sales_product_id = Products::find($request->products_id);
-               
+        $result = $customer->save();
+        
+
+        //criando nova venda no banco
+        $sales                    = new Sale();
+        $sales->date_sale         = $formatDate;
+        $sales->quant_sale        = $request->input('quantity');
+        $sales->deduction_sale    = $finalValue;
+        $sales->name_product_sold = $request->input('product');
+        $sales->status_sale       = $request->input('status');
+        $sales->sales_customer_id = $customer->customer_id;
+        $product = new Product();
+        $sales->sales_product_id  = $product->product_id;
+     
         $result = $sales->save();
 
+    
+
+        
+        
         if($result) {
-            
             // Passando um parâmetro via session no redirect na view verifico a session para exibir a mensagem de sucesso)
             return redirect("/venda/nova")->with('created',"Venda cadastrado com sucesso!");
            }else{
             return redirect("/venda/nova")->with('error',"Ops! Falha ao salvar as informações");
         }
-
-       
     }
 
     /**
@@ -99,9 +112,10 @@ class SaleController extends Controller
      */
     public function editSale(Request $request, $id=0)
     {   
-        $sales = Sale::find($id);
+        $sales          = Sale::find($id);
         $formatDateSale = $sales->date_sale = date('d/m/Y');
-        $products = Product::all();
+        $products       = Product::all();
+
             return view('edit_sales', compact('sales', 'products', 'formatDateSale'));
     }
 
@@ -114,15 +128,15 @@ class SaleController extends Controller
      */
     public function updateSale(Request $request, $id=0)
     {
-        $sales = Sale::find($id);
+        $sales     = Sale::find($id);
 
         $get_value = $request->input('discount');
 
         function replacePoint($get_value) {
             //função para alterar a virgula nos valores que vem do formulario para ponto
-            $source = array('.', ',');
+            $source  = array('.', ',');
             $replace = array('', '.');
-            $value = str_replace($source, $replace, $get_value); //remove os pontos e substitui a virgula pelo ponto
+            $value   = str_replace($source, $replace, $get_value); //remove os pontos e substitui a virgula pelo ponto
             return $value; //retorna o valor formatado para gravar no banco
         }
 
@@ -132,22 +146,21 @@ class SaleController extends Controller
         $formatDate = $request->input('date');
         $formatDate = date('Y-m-d H:i:s');
 
-        $sales->nameCustomer = $request->input('name');
-        $sales->emailCustomer = $request->input('email');
-        $sales->cpfCustomer = $request->input('cpf');
+        $sales->nameCustomer      = $request->input('name');
+        $sales->emailCustomer     = $request->input('email');
+        $sales->cpfCustomer       = $request->input('cpf');
         $sales->name_product_sold = $request->input('product');
-        $sales->date_sale = $formatDate;
-        $sales->quantSale = $request->input('quantity');
-        $sales->deductionSale = $finalValue;
-        $sales->statusSale = $request->input('status');
-        $sales->priceSale = $finalPrice;
+        $sales->date_sale         = $formatDate;
+        $sales->quantSale         = $request->input('quantity');
+        $sales->deductionSale     = $finalValue;
+        $sales->statusSale        = $request->input('status');
+        $sales->priceSale         = $finalPrice;
         
         // $product = Product::where('nameProduct', $request->input('product'))->first();
         // $sales->product_id = $product->id;
         $result = $sales->save();
 
         if($result) {
-            
             // Passando um parâmetro via session no redirect na view verifico a session para exibir a mensagem de sucesso)
             return redirect("/dashboard")->with('created',"Venda atualizada com sucesso!");
            }else{
